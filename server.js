@@ -3,11 +3,23 @@ dotenv.config();
 const express = require('express');
 const redis = require('redis');
 const pool = require('./db_connection');
-const { redisClient, connectRedis } = require('./redis');
+// const { redisClient, connectRedis } = require('./redis');
+const redisClient  = require('./redis');
 
 const app = express();
 
 app.use(express.json());
+
+console.log(pool);
+
+(async () => {
+  try {
+    await redisClient.connect();
+    console.log('Redis connected');
+  } catch (err) {
+    console.error('Redis connection error:', err);
+  }
+})();
 
 // Get all users with redis
 app.get('/api/users', async (req, res) => {
