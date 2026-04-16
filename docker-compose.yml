@@ -43,7 +43,7 @@ services:
     environment:
       NODE_ENV: production
       PORT: 3000
-      DATABASE_URL: postgresql://postegres:postegres%40L0calAdmin1234@database:5432/user_api_db
+      DATABASE_URL: postgresql://postgres:postgres%40L0calAdmin1234@database:5432/user_api_db
       REDIS_URL: redis://cache:6379
     depends_on:
       database:

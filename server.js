@@ -4,7 +4,7 @@ const express = require('express');
 const redis = require('redis');
 const pool = require('./db_connection');
 // const { redisClient, connectRedis } = require('./redis');
-const redisClient  = require('./redis');
+const redisClient = require('./redis');
 
 const app = express();
 
@@ -13,13 +13,30 @@ app.use(express.json());
 console.log(pool);
 
 (async () => {
-  try {
-    await redisClient.connect();
-    console.log('Redis connected');
-  } catch (err) {
-    console.error('Redis connection error:', err);
-  }
+    try {
+        await redisClient.connect();
+        console.log('Redis connected');
+    } catch (err) {
+        console.error('Redis connection error:', err);
+    }
 })();
+
+async function initUsersTable() {
+    const query = `
+    CREATE TABLE IF NOT EXISTS users (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        email VARCHAR(100) UNIQUE NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )`
+    try {
+        await pool.query(query);
+        console.log('Database initialized');
+    } catch (error) {
+        console.error('Database init error:', error);
+    }
+}
+initUsersTable();
 
 // Get all users with redis
 app.get('/api/users', async (req, res) => {
@@ -38,7 +55,7 @@ app.get('/api/users', async (req, res) => {
         res.json(result.rows);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Database error' });
+        res.status(500).json({ errorMessage: 'Database error', errorContent: error });
     }
 });
 

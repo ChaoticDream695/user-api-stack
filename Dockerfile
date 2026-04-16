@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm ci --only=production && \
 npm cache clean --force
 # Copier le code source
-COPY server.js .
+COPY . .
 # Créer utilisateur non-root pour sécurité
 RUN addgroup -S appgroup && \
 adduser -S appuser -G appgroup && \
