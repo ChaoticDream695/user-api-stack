@@ -1,0 +1,19 @@
+{
+  "name": "user-api-stack",
+  "version": "1.0.0",
+  "description": "This a little user api app made to practice docker-compose",
+  "license": "ISC",
+  "author": "Daryl",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "pg": "^8.20.0",
+    "redis": "^5.12.1"
+  }
+}
